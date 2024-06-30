@@ -8,8 +8,6 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const path = new URL(request.url).pathname;
-
   const cookieStore = cookies();
   const uid = cookieStore.get("uid");
   const client = cookieStore.get("client");
@@ -17,7 +15,10 @@ export async function middleware(request: NextRequest) {
 
   if (!uid || !client || !accessToken) {
     return NextResponse.redirect(
-      new URL(`${process.env.API_ORIGIN}`, request.url),
+      new URL(
+        `${process.env.API_ORIGIN}/dashboard/redirect?redirect_url=${request.url}`,
+        request.url,
+      ),
     );
   }
 
