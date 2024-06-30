@@ -7,14 +7,12 @@ services:
       - type: bind
         source: .
         target: /swap-dashboard
-      - type: volume
-        source: node_modules
-        target: /swap-dashboard/node_modules
-      - node_modules:/swap-dashboard/node_modules
     ports:
       - "3001:3001"
     tty: true
     stdin_open: true
 
-volumes:
-  node_modules:
+networks:
+  default:
+    name: swap-web_default
+    external: true

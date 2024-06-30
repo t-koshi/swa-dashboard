@@ -1,6 +1,3 @@
-import CardWrapper from "@/app/ui/dashboard/Cards";
-import { Suspense } from "react";
-
 export default async function Page() {
   return (
     <main>
