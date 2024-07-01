@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
   if (!uid || !client || !accessToken) {
     return NextResponse.redirect(
       new URL(
-        `${process.env.API_ORIGIN}/dashboard/redirect?redirect_url=${request.url}`,
+        `${process.env.NEXT_PUBLIC_API_ORIGIN}/dashboard/redirect?redirect_url=${request.url}`,
         request.url,
       ),
     );
