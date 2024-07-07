@@ -2,35 +2,75 @@
 
 import SimpleLineChartDataCard from "@/app/ui/dashboard/simple-line-chart-data-card";
 import { getRequest } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 import { DataInterface } from "../(overview)/_interfaces/DataInterface";
+import InputDate from "@/app/components/input-date";
+import SubmitButton from "@/app/components/submit-button";
+import { format, startOfToday, sub } from "date-fns";
 
 export default function Page() {
+  const [fromDate, setFromDate] = useState(
+    sub(new Date(), { months: 3 }) as Date | null,
+  );
+  const [toDate, setToDate] = useState(startOfToday() as Date | null);
   const [boardItemsData, setBoardItemsData] = useState([] as DataInterface[]);
-  const [likesData, setLikesData] = useState([] as DataInterface[]);
-  const [commentsData, setCommentsData] = useState([] as DataInterface[]);
+
+  const fetchBoardItemsData = async () => {
+    let params = { from: "", to: "" };
+    if (!!fromDate) {
+      params.from = format(fromDate, "yyyy-MM-dd");
+    }
+    if (!!toDate) {
+      params.to = format(toDate, "yyyy-MM-dd");
+    }
+    const data = await getRequest(
+      "/dashboard/api/dashboard/board_items",
+      params,
+    );
+    setBoardItemsData(data);
+  };
+
   useEffect(() => {
-    (async () => {
-      const data = await getRequest("/dashboard/api/dashboard");
-      setBoardItemsData(data.board_items);
-      setLikesData(data.likes);
-      setCommentsData(data.board_item_comments);
-    })();
+    fetchBoardItemsData();
   }, []);
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    fetchBoardItemsData();
+  };
 
   return (
     <main>
-      <h1 className={`mb-4 text-xl md:text-2xl`}>Board Items</h1>
-      <div className="grid gap-2 grid-cols-2">
-        <div>
-          <SimpleLineChartDataCard title="Board Items" data={boardItemsData} />
+      <h1 className={`mb-4 text-xl md:text-2xl`}>BoardItems</h1>
+      <form className="w-full max-w-lg mb-4" onSubmit={onSubmit}>
+        <div className="flex flex-wrap -mx-3 mb-2">
+          <div className="px-3 mb-6 md:mb-0">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              From
+            </label>
+            <InputDate
+              selectedDate={fromDate}
+              onChange={(date) => {
+                setFromDate(date);
+              }}
+            />
+          </div>
+          <div className="px-3 mb-6 md:mb-0">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              To
+            </label>
+            <InputDate
+              selectedDate={toDate}
+              onChange={(date) => {
+                setToDate(date);
+              }}
+            />
+          </div>
         </div>
-        <div>
-          <SimpleLineChartDataCard title="Likes" data={likesData} />
-        </div>
-        <div>
-          <SimpleLineChartDataCard title="Comments" data={commentsData} />
-        </div>
+        <SubmitButton>Search</SubmitButton>
+      </form>
+      <div>
+        <SimpleLineChartDataCard title="BoardItems" data={boardItemsData} />
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8"></div>
     </main>

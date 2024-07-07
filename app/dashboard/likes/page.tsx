@@ -6,20 +6,34 @@ import { FormEventHandler, useEffect, useState } from "react";
 import { DataInterface } from "../(overview)/_interfaces/DataInterface";
 import InputDate from "@/app/components/input-date";
 import SubmitButton from "@/app/components/submit-button";
+import { format, startOfToday, sub } from "date-fns";
 
 export default function Page() {
-  const [fromDate, setFromDate] = useState(null as Date | null);
-  const [toDate, setToDate] = useState(null as Date | null);
+  const [fromDate, setFromDate] = useState(
+    sub(new Date(), { months: 3 }) as Date | null,
+  );
+  const [toDate, setToDate] = useState(startOfToday() as Date | null);
   const [likesData, setLikesData] = useState([] as DataInterface[]);
+
+  const fetchLikesData = async () => {
+    let params = { from: "", to: "" };
+    if (!!fromDate) {
+      params.from = format(fromDate, "yyyy-MM-dd");
+    }
+    if (!!toDate) {
+      params.to = format(toDate, "yyyy-MM-dd");
+    }
+    const data = await getRequest("/dashboard/api/dashboard/likes", params);
+    setLikesData(data);
+  };
+
   useEffect(() => {
-    (async () => {
-      const data = await getRequest("/dashboard/api/dashboard");
-      setLikesData(data.likes);
-    })();
+    fetchLikesData();
   }, []);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    fetchLikesData();
   };
 
   return (

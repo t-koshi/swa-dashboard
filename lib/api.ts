@@ -16,8 +16,14 @@ const getDefaultHeaders: () => { [key: string]: string } = () => {
 };
 
 // GETリクエスト
-export const getRequest = async (path: string): Promise<any> => {
+export const getRequest = async (
+  path: string,
+  params?: Record<string, any>,
+): Promise<any> => {
   const url = `${process.env.NEXT_PUBLIC_API_ORIGIN}${path}`;
-  const response = await axios.get(url, { headers: getDefaultHeaders() });
+  const response = await axios.get(url, {
+    headers: getDefaultHeaders(),
+    params: params,
+  });
   return response.data;
 };
