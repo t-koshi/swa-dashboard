@@ -2,9 +2,11 @@
   "name": "swap-dashboard",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
+    "scripts": {
+    "copy-dotenv-build": "cp ./.env.$ENVIRONMENT ./.env.production",
     "dev": "next dev -p 3001",
-    "build": "next build",
+    "build:demo": "ENVIRONMENT=demo npm run copy-dotenv-build && NODE_ENV=production next build",
+    "build": "NODE_ENV=production next build",
     "start": "next start",
     "lint": "next lint"
   },
