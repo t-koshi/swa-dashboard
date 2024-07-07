@@ -8,6 +8,7 @@ const isProd = process.env.NODE_ENV == "production"
 const nextConfig = {
   output: 'export',
   assetPrefix: isProd ? SUB_DIRECTORY : "",
+  trailingSlash: true
 };
 
 export default nextConfig;
