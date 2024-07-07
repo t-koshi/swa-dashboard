@@ -3,7 +3,7 @@
 import SimpleLineChartDataCard from "@/app/ui/dashboard/simple-line-chart-data-card";
 import { getRequest } from "@/lib/api";
 import { useEffect, useState } from "react";
-import { DataInterface } from "./_interfaces/DataInterface";
+import { DataInterface } from "../(overview)/_interfaces/DataInterface";
 
 export default function Page() {
   const [boardItemsData, setBoardItemsData] = useState([] as DataInterface[]);
@@ -20,28 +20,16 @@ export default function Page() {
 
   return (
     <main>
-      <h1 className={`mb-4 text-xl md:text-2xl`}>Dashboard</h1>
+      <h1 className={`mb-4 text-xl md:text-2xl`}>Comments</h1>
       <div className="grid gap-2 grid-cols-2">
         <div>
-          <SimpleLineChartDataCard
-            title="Board Items"
-            data={boardItemsData}
-            linkHref="/dashboard/board-items"
-          />
+          <SimpleLineChartDataCard title="Board Items" data={boardItemsData} />
         </div>
         <div>
-          <SimpleLineChartDataCard
-            title="Likes"
-            data={likesData}
-            linkHref="/dashboard/likes"
-          />
+          <SimpleLineChartDataCard title="Likes" data={likesData} />
         </div>
         <div>
-          <SimpleLineChartDataCard
-            title="Comments"
-            data={commentsData}
-            linkHref="/dashboard/comments"
-          />
+          <SimpleLineChartDataCard title="Comments" data={commentsData} />
         </div>
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8"></div>

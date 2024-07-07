@@ -1,5 +1,8 @@
 "use client";
+import { DataInterface } from "@/app/dashboard/(overview)/_interfaces/DataInterface";
 import React, { PureComponent } from "react";
+import Link from "next/link";
+
 import {
   LineChart,
   Line,
@@ -13,13 +16,18 @@ import {
 
 type Props = {
   title: string;
-  data: { name: string; count: number }[];
+  data: DataInterface[];
+  linkHref?: string | null | undefined;
 };
 
-export default function SimpleLineChartDataCard({ title, data }: Props) {
+export default function SimpleLineChartDataCard({
+  title,
+  data,
+  linkHref,
+}: Props) {
   return (
     <div className="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 pb-[50px] w-[100%] h-[250px]">
-      <a href="#">
+      <a href={linkHref ?? "#"}>
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
           {title}
         </h5>
@@ -37,7 +45,7 @@ export default function SimpleLineChartDataCard({ title, data }: Props) {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="date" />
           <YAxis dataKey="count" />
           <Tooltip />
           <Legend />
