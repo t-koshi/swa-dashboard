@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie";
 
 const getDefaultHeaders: () => { [key: string]: string } = () => {
@@ -21,9 +21,13 @@ export const getRequest = async (
   params?: Record<string, any>,
 ): Promise<any> => {
   const url = `${process.env.NEXT_PUBLIC_API_ORIGIN}${path}`;
-  const response = await axios.get(url, {
-    headers: getDefaultHeaders(),
-    params: params,
-  });
-  return response.data;
+  try {
+    const response = await axios.get(url, {
+      headers: getDefaultHeaders(),
+      params: params,
+    });
+    return response.data;
+  } catch (e: any) {
+    return e;
+  }
 };
