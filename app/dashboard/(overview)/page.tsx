@@ -9,12 +9,14 @@ export default function Page() {
   const [boardItemsData, setBoardItemsData] = useState([] as DataInterface[]);
   const [likesData, setLikesData] = useState([] as DataInterface[]);
   const [commentsData, setCommentsData] = useState([] as DataInterface[]);
+  const [activeUsersData, setActiveUsersData] = useState([] as DataInterface[]);
   useEffect(() => {
     (async () => {
       const data = await getRequest("/dashboard/api/dashboard");
       setBoardItemsData(data.board_items);
       setLikesData(data.likes);
       setCommentsData(data.board_item_comments);
+      setActiveUsersData(data.active_users);
     })();
   }, []);
 
@@ -41,6 +43,13 @@ export default function Page() {
             title="Comments"
             data={commentsData}
             linkHref="/dashboard/comments"
+          />
+        </div>
+        <div>
+          <SimpleLineChartDataCard
+            title="Active Users"
+            data={activeUsersData}
+            linkHref="/dashboard/active-users"
           />
         </div>
       </div>
