@@ -26,28 +26,28 @@ export default function Page() {
       <div className="grid gap-2 grid-cols-2">
         <div>
           <SimpleLineChartDataCard
-            title="Board Items"
+            title="投稿"
             data={boardItemsData}
             linkHref="/dashboard/board-items"
           />
         </div>
         <div>
           <SimpleLineChartDataCard
-            title="Likes"
+            title="いいね"
             data={likesData}
             linkHref="/dashboard/likes"
           />
         </div>
         <div>
           <SimpleLineChartDataCard
-            title="Comments"
+            title="コメント"
             data={commentsData}
             linkHref="/dashboard/comments"
           />
         </div>
         <div>
           <SimpleLineChartDataCard
-            title="Active Users"
+            title="アクティブユーザー"
             data={activeUsersData}
             linkHref="/dashboard/active-users"
           />

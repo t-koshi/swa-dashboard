@@ -41,7 +41,7 @@ export default function Page() {
 
   return (
     <main>
-      <h1 className={`mb-4 text-xl md:text-2xl`}>ActiveUsers</h1>
+      <h1 className={`mb-4 text-xl md:text-2xl`}>アクティブユーザー</h1>
       <form className="w-full max-w-lg mb-4" onSubmit={onSubmit}>
         <div className="flex flex-wrap -mx-3 mb-2">
           <div className="px-3 mb-6 md:mb-0">

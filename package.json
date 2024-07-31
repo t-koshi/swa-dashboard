@@ -4,7 +4,7 @@
   "private": true,
     "scripts": {
     "copy-dotenv-build": "cp ./.env.$ENVIRONMENT ./.env.production",
-    "dev": "next dev -p 3001",
+    "dev": "ENVIRONMENT=develop npm run copy-dotenv-build next dev -p 3001",
     "build:demo": "ENVIRONMENT=demo npm run copy-dotenv-build && NODE_ENV=production next build",
     "build": "NODE_ENV=production next build",
     "start": "next start",
